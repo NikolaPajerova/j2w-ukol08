@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <title>Úvodní seznam</title>
+</head>
+<body>
+<main class="container">
+    <h1>Seznam osob</h1>
+    <table class="u-full-width">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>slug</th>
+            <th>Autor</th>
+            <th>Titul</th>
+            <th>perex</th>
+            <th>Tělo</th>
+            <th>publikováno</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="osoba : ${uvod}">
+            <td th:utext="${osoba.id}">ID záznamu</td>
+            <td th:utext="${osoba.slug}">slug</td>
+            <td th:utext="${osoba.author}">jméno autora</td>
+            <td th:utext="${osoba.title}">titul</td>
+            <td th:utext="${osoba.perex}">perex</td>
+            <td th:utext="${osoba.body}">tělo záznamu</td>
+            <td th:utext="${#temporals.format(osoba.published, 'd. MMMM yyyy')}">rok publikování</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pager">
+        <a th:each="pageNumber : ${#numbers.sequence(0,osoby.totalPages-1)}"
+           th:href="@{/(size=${osoby.size}, page=${pageNumber})}"
+           th:text="${pageNumber + 1}"
+           class="page"
+           th:classappend="${pageNumber==osoby.number} ? 'active'"></a>
+    </div>
+</main>
+</body>
+</html>
+

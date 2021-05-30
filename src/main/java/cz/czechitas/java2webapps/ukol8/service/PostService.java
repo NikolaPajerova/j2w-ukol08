@@ -24,11 +24,16 @@ public class PostService {
 
     public Page<Post> list(Pageable strany) {
         LocalDate dnes = LocalDate.now();
-        return postRepository.nacistASeraditAktualni(dnes, strany);
+        return postRepository.findByPublishedBefore(dnes, strany);
     }
 
     public Page<Post> singlePost(String slug, Pageable strany) {
         return postRepository.findBySlug(slug,strany);
+    }
+
+    public Page<Post> nacetniASerazeniDleData(Pageable strany) {
+        LocalDate dnesek = LocalDate.now();
+        return postRepository.findByPublishedBefore(dnesek, PostRepository.stran20);
     }
 
 }
